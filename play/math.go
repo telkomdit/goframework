@@ -14,7 +14,7 @@ package play
 
 import (
     "math"
-  . "github.com/tlkm"
+  . "github.com/telkomdit/goframework/tlkm"
 )
 
 func init() {

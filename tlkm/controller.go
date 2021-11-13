@@ -28,8 +28,8 @@ import (
     "strings"
     "sync"
     "time"
-    "github.com/tlkm/is"
-    "github.com/tlkm/to"
+    "github.com/telkomdit/goframework/is"
+    "github.com/telkomdit/goframework/to"
 )
 
 type (

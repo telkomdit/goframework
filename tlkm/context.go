@@ -27,7 +27,7 @@ import (
     "time"
     "github.com/satori/go.uuid"
     "github.com/golang-jwt/jwt"
-	"github.com/tlkm/to"
+	"github.com/telkomdit/goframework/to"
 )
 
 type (

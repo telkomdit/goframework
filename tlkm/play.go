@@ -31,8 +31,8 @@ import (
     "strconv"
     "strings"
 	"sync"
-    "github.com/tlkm/buffer"
-    "github.com/tlkm/to"
+    "github.com/telkomdit/goframework/buffer"
+    "github.com/telkomdit/goframework/to"
 )
 
 type (

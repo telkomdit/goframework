@@ -14,8 +14,8 @@ package play
 
 import (
     "errors"
-    "tlkm/to"
-  . "github.com/tlkm"
+    "github.com/telkomdit/goframework/to"
+  . "github.com/telkomdit/goframework/tlkm"
 )
 
 func init() {

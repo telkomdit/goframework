@@ -13,8 +13,8 @@
 package play
 
 import (
-    "tlkm/is"
-  . "github.com/tlkm"
+    "github.com/telkomdit/goframework/is"
+  . "github.com/telkomdit/goframework/tlkm"
 )
 
 func init() {

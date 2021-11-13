@@ -22,7 +22,7 @@ import (
     "time"
     "unicode"
     "unicode/utf8"
-    "github.com/tlkm/buffer"
+    "github.com/telkomdit/goframework/buffer"
 )
 
 func CamelCase(v string) string {

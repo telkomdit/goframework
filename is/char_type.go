@@ -18,7 +18,7 @@ import (
     "regexp"
     "unicode"
     "strconv"
-    "github.com/tlkm/to"
+    "github.com/telkomdit/goframework/to"
 )
 
 var (

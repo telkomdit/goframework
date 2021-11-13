@@ -14,7 +14,7 @@ package play
 
 import (
     "strconv"
-  . "github.com/tlkm"
+  . "github.com/telkomdit/goframework/tlkm"
 )
 
 func init() {

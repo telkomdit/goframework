@@ -15,7 +15,7 @@ package to
 
 import (
     "time"
-    "github.com/tlkm/buffer"
+    "github.com/telkomdit/goframework/buffer"
 )
 
 // TODO: mapping format golang ke format standar Y-m-d
