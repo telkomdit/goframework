@@ -1,0 +1,109 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable id=",9vSC%w|,9pg}tTpElMv">test</variable>
+  </variables>
+  <block type="procedures_defnoreturn" x="110" y="30">
+    <field name="NAME">GET</field>
+    <statement name="STACK">
+      <block type="ctx_code">
+        <value name="VALUE">
+          <block type="math_number">
+            <field name="NUM">200</field>
+          </block>
+        </value>
+        <next>
+          <block type="variables_set">
+            <field name="VAR" id=",9vSC%w|,9pg}tTpElMv">test</field>
+            <value name="VALUE">
+              <block type="list_create"></block>
+            </value>
+            <next>
+              <block type="list_push">
+                <field name="VAR" id=",9vSC%w|,9pg}tTpElMv">test</field>
+                <value name="VALUE">
+                  <block type="text">
+                    <field name="TEXT">item A</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="list_push">
+                    <field name="VAR" id=",9vSC%w|,9pg}tTpElMv">test</field>
+                    <value name="VALUE">
+                      <block type="text">
+                        <field name="TEXT">item B</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="text_print">
+                        <value name="TEXT">
+                          <block type="text">
+                            <field name="TEXT">length: </field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="text_println">
+                            <value name="TEXT">
+                              <block type="list_size">
+                                <field name="VAR" id=",9vSC%w|,9pg}tTpElMv">test</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="text_print">
+                                <value name="TEXT">
+                                  <block type="text">
+                                    <field name="TEXT">pop: </field>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="text_println">
+                                    <value name="TEXT">
+                                      <block type="list_pop">
+                                        <field name="VAR" id=",9vSC%w|,9pg}tTpElMv">test</field>
+                                      </block>
+                                    </value>
+                                    <next>
+                                      <block type="list_unshift">
+                                        <field name="VAR" id=",9vSC%w|,9pg}tTpElMv">test</field>
+                                        <value name="VALUE">
+                                          <block type="text">
+                                            <field name="TEXT">urutan pertama</field>
+                                          </block>
+                                        </value>
+                                        <next>
+                                          <block type="text_println">
+                                            <value name="TEXT">
+                                              <block type="list_pop">
+                                                <field name="VAR" id=",9vSC%w|,9pg}tTpElMv">test</field>
+                                              </block>
+                                            </value>
+                                            <next>
+                                              <block type="text_println">
+                                                <value name="TEXT">
+                                                  <block type="list_pop">
+                                                    <field name="VAR" id=",9vSC%w|,9pg}tTpElMv">test</field>
+                                                  </block>
+                                                </value>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

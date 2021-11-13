@@ -1,0 +1,70 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="procedures_defnoreturn" x="150" y="90">
+    <field name="NAME">GET</field>
+    <statement name="STACK">
+      <block type="variables_set">
+        <field name="VAR">C</field>
+        <value name="VALUE">
+          <block type="math_arithmetic">
+            <field name="OP">ADD</field>
+            <value name="A">
+              <block type="variables_ctx_get">
+                <field name="VAR">D</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="variables_ctx_get">
+                <field name="VAR">E</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <next>
+          <block type="text_print">
+            <value name="TEXT">
+              <block type="variables_ctx_get">
+                <field name="VAR">D</field>
+              </block>
+            </value>
+            <next>
+              <block type="text_print">
+                <value name="TEXT">
+                  <block type="text">
+                    <field name="TEXT"> ADD </field>
+                  </block>
+                </value>
+                <next>
+                  <block type="text_print">
+                    <value name="TEXT">
+                      <block type="variables_ctx_get">
+                        <field name="VAR">E</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="text_print">
+                        <value name="TEXT">
+                          <block type="text">
+                            <field name="TEXT"> = </field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="text_print">
+                            <value name="TEXT">
+                              <block type="variables_get">
+                                <field name="VAR">C</field>
+                              </block>
+                            </value>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

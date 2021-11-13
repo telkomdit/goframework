@@ -1,0 +1,23 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="procedures_defnoreturn" x="90" y="50">
+    <field name="NAME">GET</field>
+    <statement name="STACK">
+      <block type="text_println">
+        <value name="TEXT">
+          <block type="text">
+            <field name="TEXT">this</field>
+          </block>
+        </value>
+        <next>
+          <block type="text_println">
+            <value name="TEXT">
+              <block type="text">
+                <field name="TEXT">is</field>
+              </block>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

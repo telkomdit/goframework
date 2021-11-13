@@ -1,0 +1,74 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable id="SALH5#XZVGcp(AaU_S7Z">A</variable>
+  </variables>
+  <block type="procedures_defnoreturn" x="150" y="170">
+    <field name="NAME">GET</field>
+    <statement name="STACK">
+      <block type="controls_if">
+        <mutation else="1"></mutation>
+        <value name="IF0">
+          <block type="utils_is">
+            <field name="NAME">Numeric</field>
+            <value name="VALUE">
+              <block type="variables_ctx_get">
+                <field name="VAR">test</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="text_print">
+            <value name="TEXT">
+              <block type="variables_ctx_get">
+                <field name="VAR">test</field>
+              </block>
+            </value>
+            <next>
+              <block type="text_print">
+                <value name="TEXT">
+                  <block type="text">
+                    <field name="TEXT"> is valid</field>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+        <statement name="ELSE">
+          <block type="variables_set">
+            <field name="VAR" id="SALH5#XZVGcp(AaU_S7Z">A</field>
+            <value name="VALUE">
+              <block type="utils_to">
+                <field name="NAME">Numeric</field>
+                <value name="VALUE">
+                  <block type="variables_ctx_get">
+                    <field name="VAR">test</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="text_print">
+                <value name="TEXT">
+                  <block type="text">
+                    <field name="TEXT">coerce: </field>
+                  </block>
+                </value>
+                <next>
+                  <block type="text_print">
+                    <value name="TEXT">
+                      <block type="variables_get">
+                        <field name="VAR" id="SALH5#XZVGcp(AaU_S7Z">A</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>

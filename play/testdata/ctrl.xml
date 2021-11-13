@@ -1,0 +1,65 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable id="OvyDL-,]h::sF!I:I?nW">i</variable>
+  </variables>
+  <block type="procedures_defnoreturn" x="90" y="50">
+    <field name="NAME">GET</field>
+    <statement name="STACK">
+      <block type="controls_for">
+        <field name="VAR" id="OvyDL-,]h::sF!I:I?nW">i</field>
+        <value name="FROM">
+          <block type="math_number">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <value name="TO">
+          <block type="variables_ctx_get">
+            <field name="VAR">D</field>
+          </block>
+        </value>
+        <value name="BY">
+          <block type="math_number">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <statement name="DO">
+          <block type="controls_if">
+            <value name="IF0">
+              <block type="logic_compare">
+                <field name="OP">GT</field>
+                <value name="A">
+                  <block type="variables_get">
+                    <field name="VAR" id="OvyDL-,]h::sF!I:I?nW">i</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="DO0">
+              <block type="text_print">
+                <value name="TEXT">
+                  <block type="text">
+                    <field name="TEXT"> -&gt; </field>
+                  </block>
+                </value>
+              </block>
+            </statement>
+            <next>
+              <block type="text_print">
+                <value name="TEXT">
+                  <block type="variables_get">
+                    <field name="VAR" id="OvyDL-,]h::sF!I:I?nW">i</field>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>
