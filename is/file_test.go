@@ -14,7 +14,7 @@
 package is
 
 import (
-	"testing"
+    "testing"
 )
 
 func TestIsFile(t *testing.T) {

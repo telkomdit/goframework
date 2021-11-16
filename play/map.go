@@ -23,8 +23,8 @@ func init() {
 }
 
 func PlayMapCreate(p *PlayContext, b *PlayBlock) PlayType {
-	T := make(map[PlayType]PlayType, 0)
-	K := make([]PlayType, 0)
+    T := make(map[PlayType]PlayType, 0)
+    K := make([]PlayType, 0)
     P := 0
     return PlayMap{T: &T, K: &K, P: &P}
 }

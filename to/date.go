@@ -43,7 +43,7 @@ func DateSplit(n string) (Y, m, d, oldDate, newDate string) { // Y: Tahun, m: bu
     // menjadi 3 bagian (Y, m, d). Padding dilakukan jika ditemukan 1 digit (seharusnya mm/dd)
     for _, c := range n {
         if i > 2 { break }  // ambil hanya 3 bagian awal, informasi H:i:s dll akan diskip
-	    if c >= '0' && c <= '9' {
+        if c >= '0' && c <= '9' {
             b.WRune(c)  // simpan di buffer selama numeric
         } else {
             separator = c   // separator terakhir mereplace sebelumnya. ex: 2021.01-02, separator: -

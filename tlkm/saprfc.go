@@ -17,11 +17,11 @@
 package tlkm
 
 type (
-	SAPRFC struct {
-		info SMap
-	}
+    SAPRFC struct {
+        info SMap
+    }
 )
 
 func (self *SAPRFC) Connect() (b bool) {
-	return
+    return
 }

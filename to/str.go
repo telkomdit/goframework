@@ -30,7 +30,7 @@ func CamelCase(v string) string {
     defer b.Close()
     r := true
     for _, j := range v {
-	    if ('0' <= j && j <= '9') || ('a' <= j && j <= 'z') || ('A' <= j && j <= 'Z') {
+        if ('0' <= j && j <= '9') || ('a' <= j && j <= 'z') || ('A' <= j && j <= 'Z') {
             if r {
                 j = unicode.ToUpper(j)
                 r = false
@@ -53,7 +53,7 @@ func Digit(v string) string {
     b := buffer.Get()
     defer b.Close()
     for _, c := range v {
-	    if '0' <= c && c <= '9' {
+        if '0' <= c && c <= '9' {
             b.WRune(c)
         }
     }
@@ -119,7 +119,7 @@ func Numeric(v string) string {
     defer b.Close()
     i := true
     for j, c := range v {
-	    if '0' <= c && c <= '9' {
+        if '0' <= c && c <= '9' {
             b.WRune(c)
         } else {
             if j == 0 && c == '-' {
@@ -175,7 +175,7 @@ func SnakeCase(v string) string {
         upper = ('A' <= j && j <= 'Z')
         lower = ('a' <= j && j <= 'z')
         digit = ('0' <= j && j <= '9')
-	    if digit || lower || upper {
+        if digit || lower || upper {
             if i > 0 && upper { snake = true }
             if i > 0 && snake {
                 b.WRune('_')

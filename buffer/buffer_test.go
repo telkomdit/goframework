@@ -14,7 +14,7 @@
 package buffer
 
 import (
-	"testing"
+    "testing"
 )
 
 func TestBuffer(t *testing.T) {

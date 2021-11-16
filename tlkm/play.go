@@ -30,7 +30,7 @@ import (
     "errors"
     "strconv"
     "strings"
-	"sync"
+    "sync"
     "github.com/telkomdit/goframework/buffer"
     "github.com/telkomdit/goframework/to"
 )
@@ -142,15 +142,15 @@ type (
     playNull struct {}
 
     PlayList struct {
-	    T   *[]PlayType
+        T   *[]PlayType
     }
 
     // Ini yang paling ribet karena pada saat iterasi map, block tidak bisa menyimpan
     // pointer key. Yang paling mungkin dilakukan adalah menyimpan key dalam list
     // dan memperlakukan iterasi sama seperti list
     PlayMap struct {
-	    T   *map[PlayType]PlayType
-	    K   *[]PlayType     // key reference
+        T   *map[PlayType]PlayType
+        K   *[]PlayType     // key reference
         P   *int    // TODO: reset counter pada saat pertama kali iterasi
     }
 
@@ -167,9 +167,9 @@ var (
 )
 
 func init() {
-	player.pool.New = func() interface{} {
-		return &PlayContext{}
-	}
+    player.pool.New = func() interface{} {
+        return &PlayContext{}
+    }
 }
 
 func PlayExport(m PlayExportSignature) {
@@ -339,12 +339,12 @@ func (self PlayBool) LT(p *PlayContext, r PlayType) bool {
 
 func (self PlayList) ListException() { Exit("ListAssertException") }
 func (self PlayList) String(p *PlayContext) (r string) {
-	v := *self.T
-	a := make([]string, len(v))
-	for i, j := range v {
-		a[i] = j.String(p)
-	}
-	return strings.Join(a, ",")
+    v := *self.T
+    a := make([]string, len(v))
+    for i, j := range v {
+        a[i] = j.String(p)
+    }
+    return strings.Join(a, ",")
 }
 func (self PlayList) Float(p *PlayContext) (r float64) { self.ListException(); return }
 func (self PlayList) Int(p *PlayContext) (r int64) { self.ListException(); return }
@@ -353,7 +353,7 @@ func (self PlayList) List(p *PlayContext) PlayList { return self }
 func (self PlayList) Map(p *PlayContext) (r PlayMap) { self.ListException(); return }
 func (self PlayList) EQ(p *PlayContext, t PlayType) (r bool) {
     r = false
-	if b, v := t.(PlayList); v {
+    if b, v := t.(PlayList); v {
         a := *self.T
         b := *b.T
         if len(a) == len(b) {
@@ -366,7 +366,7 @@ func (self PlayList) EQ(p *PlayContext, t PlayType) (r bool) {
             }
         }
     }
-	return
+    return
 }
 func (self PlayList) LT(p *PlayContext, t PlayType) (r bool) { return !self.EQ(p, t) }
 
@@ -379,7 +379,7 @@ func (self PlayMap) List(p *PlayContext) (r PlayList) { self.MapException(); ret
 func (self PlayMap) Map(p *PlayContext) PlayMap { return self }
 func (self PlayMap) EQ(p *PlayContext, t PlayType) (r bool) {
     r = false
-	if b, v := t.(PlayMap); v {
+    if b, v := t.(PlayMap); v {
         a := *self.T
         b := *b.T
         if len(a) == len(b) {
@@ -393,7 +393,7 @@ func (self PlayMap) EQ(p *PlayContext, t PlayType) (r bool) {
             }
         }
     }
-	return
+    return
 }
 func (self PlayMap) LT(p *PlayContext, t PlayType) (r bool) { return !self.EQ(p, t) }
 
@@ -460,7 +460,7 @@ func (self *PlayContext) close() {
 // Dengan asumsi semua field sudah nil pada saat kembali ke pool, Argv akan dibuat
 // pada kesempatan pertama context diambil dari pool
 func (self *Player) getContext() (v *PlayContext) {
-	v = self.pool.Get().(*PlayContext)
+    v = self.pool.Get().(*PlayContext)
     v.Argv = make(map[string]PlayType)    // global var
     return
 }
@@ -511,7 +511,7 @@ func saveXML(conn *Connection, cntx *Context, namespace, methodName string, XML 
 // Umumnya hanya dipanggil 1x, atau jika diperlukan untuk mereplace AST sebelumnya
 // pada saat development
 func PlayParse(conn *Connection, cntx *Context, namespace string, XML []byte, repo... bool) (e error) {
-	var (
+    var (
         m PlayXML
         x PlayService
     )

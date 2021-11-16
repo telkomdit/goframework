@@ -16,9 +16,9 @@ package play
 import (
     "fmt"
     "testing"
-	"io/ioutil"
+    "io/ioutil"
   _ "github.com/mysql"
-	"net/http/httptest"
+    "net/http/httptest"
   . "tlkm"
 )
 
@@ -27,8 +27,8 @@ func init() {
 }
 
 func doTest(xmlname, methodName, namespace, params string, t *testing.T) {
-	xmldata, e := ioutil.ReadFile("testdata/" + xmlname)
-	if e != nil {
+    xmldata, e := ioutil.ReadFile("testdata/" + xmlname)
+    if e != nil {
         t.Error(e)
         return
     }
@@ -37,7 +37,7 @@ func doTest(xmlname, methodName, namespace, params string, t *testing.T) {
 
     u := "http://127.0.0.1" + namespace + "?" + params
     r := httptest.NewRequest(methodName, u, nil)
-	w := httptest.NewRecorder()
+    w := httptest.NewRecorder()
     cntx, _ := FrontController("D:/gdk", true, 4).NewContext(w, r, conn, methodName)
 
     if e := PlayParse(conn, cntx, namespace, xmldata); e != nil {
@@ -52,11 +52,11 @@ func doTest(xmlname, methodName, namespace, params string, t *testing.T) {
         return
     }
     z := w.Result()
-	o, _ := ioutil.ReadAll(z.Body)
-	fmt.Println("----------")
-	fmt.Println("code:", z.StatusCode)
-	fmt.Println("mime:", z.Header.Get("Content-Type"))
-	fmt.Println("body:")
-	fmt.Println("----------")
-	fmt.Println(string(o))
+    o, _ := ioutil.ReadAll(z.Body)
+    fmt.Println("----------")
+    fmt.Println("code:", z.StatusCode)
+    fmt.Println("mime:", z.Header.Get("Content-Type"))
+    fmt.Println("body:")
+    fmt.Println("----------")
+    fmt.Println(string(o))
 }

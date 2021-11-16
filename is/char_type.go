@@ -22,11 +22,11 @@ import (
 )
 
 var (
-	regexEmail        = regexp.MustCompile(`^[a-zA-Z0-9.!#$%&'*+/=?^_{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$`)
-	regexMacAddress   = regexp.MustCompile(`^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$`)
-	regexLatitude     = regexp.MustCompile(`^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$`)
-	regexLongitude    = regexp.MustCompile(`^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$`)
-	regexURL          = regexp.MustCompile(`^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&'\\(\\)\\*\\+,;=.]+$`)
+    regexEmail        = regexp.MustCompile(`^[a-zA-Z0-9.!#$%&'*+/=?^_{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$`)
+    regexMacAddress   = regexp.MustCompile(`^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$`)
+    regexLatitude     = regexp.MustCompile(`^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$`)
+    regexLongitude    = regexp.MustCompile(`^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$`)
+    regexURL          = regexp.MustCompile(`^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&'\\(\\)\\*\\+,;=.]+$`)
 )
 
 func lowerRune(v rune) bool {
@@ -45,7 +45,7 @@ func digitRune(v rune) bool {
 func Alnum(v string) bool {
     b := false
     for _, c := range v {
-	    b = digitRune(c) || lowerRune(c) || upperRune(c)
+        b = digitRune(c) || lowerRune(c) || upperRune(c)
         if !b { return false }
     }
     return true
@@ -55,7 +55,7 @@ func Alnum(v string) bool {
 func Alpha(v string) bool {
     b := false
     for _, c := range v {
-	    b = lowerRune(c) || upperRune(c)
+        b = lowerRune(c) || upperRune(c)
         if !b { return false }
     }
     return true
@@ -65,7 +65,7 @@ func Alpha(v string) bool {
 func AlphaDash(v string) bool {
     b := false
     for _, c := range v {
-	    b = lowerRune(c) || upperRune(c) || (c == '_') || (c == '-')
+        b = lowerRune(c) || upperRune(c) || (c == '_') || (c == '-')
         if !b { return false }
     }
     return true
@@ -75,7 +75,7 @@ func AlphaDash(v string) bool {
 func AlphaSpace(v string) bool {
     b := false
     for _, c := range v {
-	    b = lowerRune(c) || upperRune(c) || (c == '_') || (c == '-') || (c == ' ')
+        b = lowerRune(c) || upperRune(c) || (c == '_') || (c == '-') || (c == ' ')
         if !b { return false }
     }
     return true
@@ -144,7 +144,7 @@ func Numeric(v string) bool {
     b := false
     i := false
     for j, c := range v {
-	    b = digitRune(c) || (c == '-' && j == 0)    // digit plus sign/unsign plus decimal
+        b = digitRune(c) || (c == '-' && j == 0)    // digit plus sign/unsign plus decimal
         if c == '.' {
             if i { return false }
             i = true

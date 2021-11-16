@@ -24,7 +24,7 @@ func init() {
 }
 
 func PlayListCreate(p *PlayContext, b *PlayBlock) PlayType {
-	T := make([]PlayType, 0)
+    T := make([]PlayType, 0)
     return PlayList{T: &T}
 }
 

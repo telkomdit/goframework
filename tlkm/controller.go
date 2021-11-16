@@ -22,9 +22,9 @@ import (
     "io/ioutil"
     "mime"
     "net/http"
-	"net/url"
+    "net/url"
     "reflect"
-	"strconv"
+    "strconv"
     "strings"
     "sync"
     "time"
@@ -61,9 +61,9 @@ func (self *controller) init(fp string, dev bool) {
 
     // Context menggunakan sync.Pool karena property (dan proses) yang dilakukan,
     // jika setiap request/hit membuat instance baru, hanya akan menambah latency GC
-	self.syncPool.New = func() interface{} {
-		return &Context{}
-	}
+    self.syncPool.New = func() interface{} {
+        return &Context{}
+    }
 }
 
 // struct tidak support indexing
@@ -334,11 +334,11 @@ func (self *controller) validate(args map[string]Argument, ctx *Context, log boo
 // Sesuai spesifikasi standar HTTP, payload hanya berlaku untuk http-method POST/PUT. Payload untuk
 // http-method selain POST/PUT akan di-drop oleh browser (default client)
 func (self *controller) NewContext(w http.ResponseWriter, r *http.Request, conn *Connection, methodName string) (*Context, error) {
-	ctx := self.syncPool.Get().(*Context)
+    ctx := self.syncPool.Get().(*Context)
     // inisialisasi awal diperlukan karena context akan dikembalikan ke sync.Pool
     // untuk digunakan oleh request yang lain
-	ctx.Response = w
-	ctx.Request = r
+    ctx.Response = w
+    ctx.Request = r
     ctx.SID = ""
     ctx.newSID = ""
     ctx.Values = url.Values{}
@@ -541,7 +541,7 @@ func (self *controller) ServeHTTP(w http.ResponseWriter, r *http.Request) {
     // error atau tidak, Context diambil dari sync.Pool dan harus dikembalikan
     ctx, err := self.NewContext(w, r, conn, methodName)
     defer self.Recover(w, ctx) // oleh karena itu, defer setelahnya
-	if err != nil { // sebelum return kalau ada error
+    if err != nil { // sebelum return kalau ada error
         self.sendError(w, StatusPreconditionFailed, err.Error())
         return
     }

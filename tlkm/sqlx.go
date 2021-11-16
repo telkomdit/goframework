@@ -19,15 +19,15 @@
 package tlkm
 
 import (
-	"context"
+    "context"
     "database/sql"
-	"errors"
-	"reflect"
-	"strconv"
-	"strings"
-	"sync"
-	"github.com/telkomdit/goframework/buffer"
-	"github.com/telkomdit/goframework/to"
+    "errors"
+    "reflect"
+    "strconv"
+    "strings"
+    "sync"
+    "github.com/telkomdit/goframework/buffer"
+    "github.com/telkomdit/goframework/to"
 )
 
 type (
@@ -135,26 +135,26 @@ var (
 
 // TODOC
 func init() {
-	SQL.rsset.New = func() interface{} {
-		return &ResultSet{}
-	}
-	SQL.query.New = func() interface{} {
-		return &QueryBuilder{}
-	}
-	SQL.bbfer.New = func() interface{} {
-		return &BulkBuffer{}
-	}
+    SQL.rsset.New = func() interface{} {
+        return &ResultSet{}
+    }
+    SQL.query.New = func() interface{} {
+        return &QueryBuilder{}
+    }
+    SQL.bbfer.New = func() interface{} {
+        return &BulkBuffer{}
+    }
     for k, v := range driversMap {
         drivers[v] = k
     }
 }
 
 func (self *FakeResult) LastInsertId() (int64, error) {
-	return self.ID, nil
+    return self.ID, nil
 }
 
 func (self *FakeResult) RowsAffected() (int64, error) {
-	return self.AR, nil
+    return self.AR, nil
 }
 
 // sql.Open akan dilakukan 1x pada saat skema koneksi didaftarkan (sebelum server berjalan)
@@ -208,7 +208,7 @@ func (self *sqlx) Default() *Connection {
 
 // TODOC
 func (self *sqlx) Builder(driver... Driver) (qb *QueryBuilder) {
-	qb = self.query.Get().(*QueryBuilder)
+    qb = self.query.Get().(*QueryBuilder)
     if len(driver) > 0 {
         qb.driver = driver[0]
     } else {
@@ -385,7 +385,7 @@ func (self *sqlx) DeleteQuery(driver Driver, tableName string, where... *GMap) (
 
 // TODOC
 func (self *sqlx) bulkInsert(intoTable string, cols List, ignore bool) *BulkBuffer {
-	var b *BulkBuffer = self.bbfer.Get().(*BulkBuffer)
+    var b *BulkBuffer = self.bbfer.Get().(*BulkBuffer)
     b.bfer = buffer.Get()
     var u *buffer.ByteBuffer = b.bfer
     u.WS("INSERT")
@@ -429,7 +429,7 @@ func (self *sqlx) ResultSet(rows *Rows, err error) *ResultSet {
         args[i] = &vals[i]
         indx[name[i]] = &vals[i]
     }
-	var rs *ResultSet = self.rsset.Get().(*ResultSet)
+    var rs *ResultSet = self.rsset.Get().(*ResultSet)
     rs.scan = false
     rs.cols = cols
     rs.rows = rows
@@ -474,9 +474,9 @@ func (self *ResultSet) Scan(argv interface{}) bool {
         coln := vobj.FieldByName(name)
         var iptr interface{}
         if coln.IsValid() {
-			iptr = coln.Addr().Interface()
+            iptr = coln.Addr().Interface()
         } else {
-			iptr = &RawBytes{}
+            iptr = &RawBytes{}
         }
         args[indx] = iptr
         bind[name] = iptr
@@ -584,8 +584,8 @@ func (self *ResultSet) Int(name string) int {
         if n, e := strconv.Atoi(string(c)); e == nil {
             return n
         }
-	}
-	return 0
+    }
+    return 0
 }
 
 // TODOC
@@ -678,12 +678,12 @@ func (self *Connection) Close() {
 
 // TODOC
 func (self *Connection) Query(query string, args ...interface{}) *ResultSet {
-	return SQL.ResultSet(self.QueryContext(context.Background(), query, args...))
+    return SQL.ResultSet(self.QueryContext(context.Background(), query, args...))
 }
 
 // TODOC
 func (self *Connection) Begin() *Tx {
-	tx, err := self.BeginTx(context.Background(), nil)
+    tx, err := self.BeginTx(context.Background(), nil)
     if err != nil {
         panic(err.Error())
     }
@@ -692,7 +692,7 @@ func (self *Connection) Begin() *Tx {
 
 // TODOC
 func (self *Tx) Query(query string, args ...interface{}) *ResultSet {
-	return SQL.ResultSet(self.QueryContext(context.Background(), query, args...))
+    return SQL.ResultSet(self.QueryContext(context.Background(), query, args...))
 }
 
 // TODOC
@@ -737,7 +737,7 @@ func (self *Connection) recordMap(T reflect.Type, v reflect.Value) GMap {
     for i := 0; i < T.NumField(); i++ {
         j := T.Field(i)
         u := v.Field(i)
-		if j.Anonymous || u.IsNil() || u.Kind() != reflect.Ptr { continue }
+        if j.Anonymous || u.IsNil() || u.Kind() != reflect.Ptr { continue }
         m[j.Name] = u.Elem().Interface()
     }
     return m
@@ -758,7 +758,7 @@ func (self *Connection) recordMaps(T reflect.Type, v reflect.Value) (CL , PK , F
         if isPK && u.IsNil() {
             return nil, nil, nil, nil, errors.New(Sprintf("Primary Key %s is nil", j.Name))
         }
-		if j.Anonymous || u.IsNil() || u.Kind() != reflect.Ptr { continue }
+        if j.Anonymous || u.IsNil() || u.Kind() != reflect.Ptr { continue }
         g := u.Elem().Interface()
         if isFK {
             FR[j.Name] = f
@@ -891,7 +891,7 @@ func (self *Connection) Delete(r RecordInterface) (Result, error) {
 // TODOC
 func (self *Connection) Select(qb *QueryBuilder) *ResultSet {
     stmt, argv := qb.SelectQuery()
-	return SQL.ResultSet(self.QueryContext(context.Background(), stmt, argv...))
+    return SQL.ResultSet(self.QueryContext(context.Background(), stmt, argv...))
 }
 
 // TODOC
@@ -1029,7 +1029,7 @@ func (self *QueryBuilder) SelectQuery() (string, []interface{}) {
     stmt.WS("   SELECT ").WS(self.cols).NL()
     stmt.WS("     FROM ").WS(self.from)
     if self.join != nil {
-	    for _, v := range self.join {
+        for _, v := range self.join {
             stmt.NL().WS(v)
         }
     }

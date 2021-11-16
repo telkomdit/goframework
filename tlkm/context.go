@@ -18,16 +18,16 @@ package tlkm
 import (
     "encoding/json"
     "errors"
-	"io"
+    "io"
     "io/ioutil"
-	"mime/multipart"
+    "mime/multipart"
     "net/http"
-	"net/url"
+    "net/url"
     "os"
     "time"
     "github.com/satori/go.uuid"
     "github.com/golang-jwt/jwt"
-	"github.com/telkomdit/goframework/to"
+    "github.com/telkomdit/goframework/to"
 )
 
 type (
@@ -46,8 +46,8 @@ type (
 
         SID, newSID     string  // session ID
         PID, HID, GID   string  // invoked handler
-	    Values      url.Values  // parameter dari (GET/POST/PUT/DELETE)
-	    Files       map[string]*multipart.FileHeader    // parsed multipart
+        Values      url.Values  // parameter dari (GET/POST/PUT/DELETE)
+        Files       map[string]*multipart.FileHeader    // parsed multipart
 
         // ** private **
         sesMap      GMap    // session variables
@@ -96,31 +96,31 @@ func (self *Context) MethodName() string {
 // sebelum ada data yang ditulis/dikirim
 func (self *Context) SetCookie(name string, value string, maxAge int,
                                domain string, secure bool) {
-	cookie := &http.Cookie{}
-	cookie.Name = name
-	cookie.Value = value
+    cookie := &http.Cookie{}
+    cookie.Name = name
+    cookie.Value = value
     if maxAge != 0 {
         cookie.MaxAge = maxAge  // by default sampai logout atau browser ditutup
     }
     cookie.Path = FileSeparator
     cookie.HttpOnly = true      // asumsi client (secara umum) disini adalah browser
-	if len(domain) > 0 {
+    if len(domain) > 0 {
         cookie.Domain = domain
-	}
-	if secure {
+    }
+    if secure {
         cookie.Secure = secure
-	}
+    }
     cookie.SameSite = http.SameSiteStrictMode
-	http.SetCookie(self.Response, cookie)
+    http.SetCookie(self.Response, cookie)
 }
 
 // Ambil data cookie yang dikirim client
 func (self *Context) Cookie(name string) string {
-	cookie, e := self.Request.Cookie(name)
-	if e != nil {
-		return ""
-	}
-	return cookie.Value
+    cookie, e := self.Request.Cookie(name)
+    if e != nil {
+        return ""
+    }
+    return cookie.Value
 }
 
 // Method ini akan dipanggil oleh controller tepat pada saat context diambil dari
@@ -254,7 +254,7 @@ func (self *Context) sessionCreate(maxAge int) *Context {
     cookie.Path = FileSeparator
     cookie.HttpOnly = true
     cookie.SameSite = http.SameSiteStrictMode
-	http.SetCookie(self.Response, cookie)
+    http.SetCookie(self.Response, cookie)
     self.sesCreate = true
     return self
 }
@@ -380,14 +380,14 @@ func (self *Context) HasHandler(GID, PID, HID string) bool {
 
 // Set http header secara langsung
 func (self *Context) Header(k, v string) *Context {
-	self.Response.Header().Set(k, v)
+    self.Response.Header().Set(k, v)
 
     return self
 }
 
 // Shortcut ctx.Header karena fungsi ini bisa kita anggap sudah umum digunakan
 func (self *Context) ContentType(v string) *Context {
-	return self.Header("Content-Type", v)
+    return self.Header("Content-Type", v)
 }
 
 // By default, redirect akan mengikirim http status 302 (status found) tapi memungkinkan
@@ -397,12 +397,12 @@ func (self *Context) ContentType(v string) *Context {
 func (self *Context) Redirect(location string, status ...int) {
     self.sessionClose()
     self.sent = true
-	self.Header("Location", location)
+    self.Header("Location", location)
     if len(status) > 0 {
-		http.Redirect(self.Response, self.Request, location, status[0])
-	} else {
-		http.Redirect(self.Response, self.Request, location, StatusFound)
-	}
+        http.Redirect(self.Response, self.Request, location, status[0])
+    } else {
+        http.Redirect(self.Response, self.Request, location, StatusFound)
+    }
 }
 
 // Informasi Client Addr diambil dari Request.RemoteAddr, kecuali ada informasi spesifik
@@ -410,14 +410,14 @@ func (self *Context) Redirect(location string, status ...int) {
 func (self *Context) ClientIP() string {
     cip := self.Request.RemoteAddr
     chk := List{"X-Real-IP", "X-Forwarded-For", "Forwarded-For", "X-Forwarded", "X-Cluster-Client-IP", "Client-IP"}
-	for _, v := range chk {
-		xip := self.Request.Header.Get(v)
-	    if len(xip) > 0 {
+    for _, v := range chk {
+        xip := self.Request.Header.Get(v)
+        if len(xip) > 0 {
             cip = xip
             break
         }
-	}
-	return cip
+    }
+    return cip
 }
 
 // Write hanya menerima array of byte
@@ -428,14 +428,14 @@ func (self *Context) Write(data []byte) *Context {
         self.sent = true
     }
     if !self.exit {
-	    self.Response.Write(data)
+        self.Response.Write(data)
     }
-	return self
+    return self
 }
 
 // Alias dari method Write dengan parameter string
 func (self *Context) Echo(data string) *Context {
-	return self.Write([]byte(data))
+    return self.Write([]byte(data))
 }
 
 // Check parameter pada payload. Perlu diperhatikan hanya parameter yang dikirim
@@ -445,22 +445,22 @@ func (self *Context) Echo(data string) *Context {
 // Jika parameter yang sama dikirim via query dan payload, framework akan menyimpan
 // parameter dalam bentuk list
 func (self *Context) Exists(n string) bool {
-	_, b := self.Values[n]
-	return b
+    _, b := self.Values[n]
+    return b
 }
 
 // Check nama file pada payload. Transfer file mengikuti format standar multipart/form-data
 func (self *Context) FileExists(n string) bool {
-	_, b := self.Files[n]
-	return b
+    _, b := self.Files[n]
+    return b
 }
 
 // Ambil parameter (non file) dalam bentuk map[string]string
 func (self *Context) Map() SMap {
-	m := make(SMap)
-	for k := range self.Values {
+    m := make(SMap)
+    for k := range self.Values {
         m[k] = self.Values.Get(k)
-	}
+    }
     return m
 }
 
@@ -470,7 +470,7 @@ func (self *Context) SessionMap() *GMap {
 }
 
 func (self *Context) RequestPath() string {
-	return self.Request.URL.Path
+    return self.Request.URL.Path
 }
 
 func (self *Context) RawRequest() (r []byte, e error) {
@@ -481,7 +481,7 @@ func (self *Context) RawRequest() (r []byte, e error) {
 
 // Untuk parameter list, kemungkinan index pertama yang akan dikembalikan
 func (self *Context) Get(name string) string {
-	return self.Values.Get(name)
+    return self.Values.Get(name)
 }
 
 // Solusi skenario data harus dikirim dalam format url-encoded, dengan hasil akhir
@@ -489,19 +489,19 @@ func (self *Context) Get(name string) string {
 //
 // Itulah alasan method ini dibuat, untuk memudahkan proses decode skenario diatas
 func (self *Context) Unmarshal(name string, v interface{}) error {
-	if e := json.Unmarshal([]byte(self.Get(name)), &v); e != nil {
-		return e
-	}
-	return nil
+    if e := json.Unmarshal([]byte(self.Get(name)), &v); e != nil {
+        return e
+    }
+    return nil
 }
 
 // Ambil parameter dalam bentuk list (umumnya parameter checkbox)
 func (self *Context) GetList(n string) (v List) {
-	if self.Values == nil {
-		return
-	}
-	v = self.Values[n]
-	return
+    if self.Values == nil {
+        return
+    }
+    v = self.Values[n]
+    return
 }
 
 // Set?? Kenapa dalam Context??
@@ -514,26 +514,26 @@ func (self *Context) GetList(n string) (v List) {
 // Karena komunikasi antar rules atau antara rules dan handler tidak bisa dilakukan
 // melalui parameter, Context digunakan untuk meneruskan data/fakta
 func (self *Context) Set(n string, v string) *Context {
-	self.Values.Set(n, v)
+    self.Values.Set(n, v)
     return self
 }
 
 // Hapus parameter
 func (self *Context) Unset(n string) *Context {
-	self.Values.Del(n)
+    self.Values.Del(n)
     return self
 }
 
 // Versi awal, user diharapkan memproses sendiri parsed-file wkwk
 func (self *Context) File(n string) *multipart.FileHeader {
-	return self.Files[n]
+    return self.Files[n]
 }
 
 // TODO: file ditangani oleh framework, copy ke lokal, ke s3 dll
 func (self *Context) FileMove(n, to string) (e error) {
-	if src, e := self.Files[n].Open(); e == nil {
+    if src, e := self.Files[n].Open(); e == nil {
         defer src.Close()
-	    if out, e := os.Create(to); e == nil {
+        if out, e := os.Create(to); e == nil {
             defer out.Close()
             _, e = io.Copy(out, src)
         }
@@ -546,7 +546,7 @@ func (self *Context) FileBytes(n string) ([]byte, error) {
     if f, b := self.Files[n]; b {
         r, e := f.Open()
         if e != nil {
-		    return ioutil.ReadAll(r)
+            return ioutil.ReadAll(r)
         }
         return nil, e
     }
@@ -554,7 +554,7 @@ func (self *Context) FileBytes(n string) ([]byte, error) {
 }
 
 func (self *Context) FileUnlink(n string) *Context {
-	delete(self.Files, n)
+    delete(self.Files, n)
     return self
 }
 

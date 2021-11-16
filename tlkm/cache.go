@@ -23,10 +23,10 @@
 package tlkm
 
 import (
-	"runtime"
-	"strconv"
-	"sync"
-	"time"
+    "runtime"
+    "strconv"
+    "sync"
+    "time"
 )
 
 type (
@@ -83,73 +83,73 @@ var (
 
 // Single instance Cache, mekanisme access dll kita percayakan kepada sync.Map
 func init() {
-	Cache = &cache{
-		items: &sync.Map{},
+    Cache = &cache{
+        items: &sync.Map{},
         start: &check{
             du: 10 * time.Minute,
             ch: make(chan bool),
         },
-	}
-	go Cache.start.run(Cache)
+    }
+    go Cache.start.run(Cache)
     runtime.SetFinalizer(Cache, finalize)
 }
 
 func finalize(c *cache) {
-	c.start.ch <- true
+    c.start.ch <- true
 }
 
 func (self *check) run(c *cache) {
-	t := time.NewTicker(self.du)
-	for {
-		select {
-		case <-t.C:
-			c.DeleteExpired()
-		case <-self.ch:
-			t.Stop()
+    t := time.NewTicker(self.du)
+    for {
+        select {
+        case <-t.C:
+            c.DeleteExpired()
+        case <-self.ch:
+            t.Stop()
 
             return
-		}
-	}
+        }
+    }
 }
 
 func (self *cache) Extend(k string, d time.Duration) {
     var e int64 = time.Now().Add(d * time.Second).Unix()
-	if v, x := self.items.Load(k); x {
+    if v, x := self.items.Load(k); x {
         o := v.(value)
         o.expire = e
-	    self.items.Store(k, o)
+        self.items.Store(k, o)
     }
 }
 
 func (self *cache) Set(k string, x interface{}, d ...time.Duration) {
     var e int64 = 0
-	if len(d) > 0 {
+    if len(d) > 0 {
         e = time.Now().Add(d[0] * time.Second).Unix()
-	}
-	self.items.Store(k, value{
-		Object: x,
-		expire: e,
-	})
+    }
+    self.items.Store(k, value{
+        Object: x,
+        expire: e,
+    })
 }
 
 func (self *cache) Exists(k string) bool {
-	_, e := self.items.Load(k)
+    _, e := self.items.Load(k)
 
     return e
 }
 
 // By default, cache return adalah interface{}
 func (self *cache) Get(k string) (interface{}, bool) {
-	v, e := self.items.Load(k)
-	if !e {
-		return nil, false
-	}
+    v, e := self.items.Load(k)
+    if !e {
+        return nil, false
+    }
     o := v.(value)
-	if o.expire > 0 {
-		if time.Now().Unix() > o.expire {
-			return nil, false
-		}
-	}
+    if o.expire > 0 {
+        if time.Now().Unix() > o.expire {
+            return nil, false
+        }
+    }
 
     return o.Object, true
 }
@@ -311,28 +311,28 @@ func (self *cache) IMap(k string) (i IMap, j bool) {
 }
 
 func (self *cache) Delete(k string) {
-	self.items.Delete(k)
+    self.items.Delete(k)
 }
 
 func (self *cache) DeleteExpired() {
-	now := time.Now().Unix()
+    now := time.Now().Unix()
     self.items.Range(func(k, v interface{}) bool {
         o := v.(value)
-		if o.expire > 0 && o.expire < now {
-	        self.items.Delete(k)
-		}
+        if o.expire > 0 && o.expire < now {
+            self.items.Delete(k)
+        }
 
         return true
     })
 }
 
 func (self *cache) GetExpired(k string, d int64) (int64, bool) {
-	if v, e := self.items.Load(k); e {
+    if v, e := self.items.Load(k); e {
         o := v.(value)
         if o.expire > 0 && o.expire > d {
             return o.expire, true
         }
-	}
+    }
 
     return 0, false
 }
@@ -341,5 +341,5 @@ func (self *cache) GetExpired(k string, d int64) (int64, bool) {
 // pada skenario ada update parameter/config database, belum ada menu/UI tapi
 // harus masuk cache. wtf?! wkwk
 func (self *cache) Flush() {
-	self.items = &sync.Map{}
+    self.items = &sync.Map{}
 }

@@ -14,8 +14,8 @@
 package tlkm
 
 import (
-	"testing"
-  _ "github.com/mysql"
+    "testing"
+  _ "github.com/go-sql-driver/mysql"
 )
 
 func init() {

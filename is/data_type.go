@@ -72,7 +72,7 @@ func Float(v string) bool {
     i := false  // decimal separator
     e := false  // exp
     for j, c := range v {
-	    if b = ('0' <= c && c <= '9') || (c == '-' && j == 0); !b {
+        if b = ('0' <= c && c <= '9') || (c == '-' && j == 0); !b {
             if c == '.' {
                 if i { return false }   // memastikan hanya muncul 1x
                 i = true

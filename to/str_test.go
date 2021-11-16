@@ -14,7 +14,7 @@
 package to
 
 import (
-	"testing"
+    "testing"
 )
 
 func TestCamelCase(t *testing.T) {
