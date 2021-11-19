@@ -279,6 +279,8 @@ var (
         doFILE: "FILE", doPATH: "PATH", dOPTIONS: "OPTIONS"}
     doKey = make(map[string]httpMethod)
 
+    documentRoot    string
+
     // ** private **
     // secret key bisa ditaruh di environment variable (akan diakses via os.Getenv)
     // atau langsung didefinisikan di source-code
@@ -810,11 +812,16 @@ func (self *win32svc) Stop() error {
 }
 
 func FrontController(www string, dev bool, loglv int) *controller {
+    documentRoot = www
     if ctrl == nil {
         ctrl = &controller{Logger: &Logger{logNs: "HTTP", logLv: loglv}}
         ctrl.init(www, dev)
     }
     return ctrl
+}
+
+func DocumentRoot() string {
+    return documentRoot
 }
 
 // Tricky part: memetakan salah satu handler ke namespace / karena semua handler
