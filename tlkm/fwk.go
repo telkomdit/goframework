@@ -811,11 +811,11 @@ func (self *win32svc) Stop() error {
     return nil
 }
 
-func FrontController(www string, dev bool, loglv int) *controller {
+func FrontController(httpSwagger http.HandlerFunc, www string, dev bool, loglv int) *controller {
     documentRoot = www
     if ctrl == nil {
         ctrl = &controller{Logger: &Logger{logNs: "HTTP", logLv: loglv}}
-        ctrl.init(www, dev)
+        ctrl.init(httpSwagger, www, dev)
     }
     return ctrl
 }
@@ -828,7 +828,7 @@ func DocumentRoot() string {
 // ada dalam package/modul
 //
 // By default, yang digunakan sebagai home handler adalah /syst/api/index (secure flag false)
-func Win32Service(object Service, https bool, www string, dev bool) *win32svc {
+func Win32Service(object Service, httpSwagger http.HandlerFunc, https bool, www string, dev bool) *win32svc {
     if service != nil {
         return service
     }
@@ -840,7 +840,7 @@ func Win32Service(object Service, https bool, www string, dev bool) *win32svc {
     _, PID, HID := getIndexes(object)
     servMap[FileSeparator] = object
     servRef[FileSeparator] = ServiceProperty{SEC: false, PID: PID, HID: HID}
-    fc := FrontController(www, dev, loglv)
+    fc := FrontController(httpSwagger, www, dev, loglv)
     service = &win32svc{
         srv: &http.Server{Addr: ":" + port, Handler: fc},
     }

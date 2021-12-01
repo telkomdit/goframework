@@ -39,6 +39,7 @@ type (
         *Logger
         fileHandler http.Handler    // semua request non-handler akan dianggap request ke static resources
         syncPool    sync.Pool       // context pool
+        httpSwagger http.HandlerFunc
     }
 
     // ** private **
@@ -54,7 +55,8 @@ type (
 )
 
 // Inisialisasi static (resource) handler dan context pool
-func (self *controller) init(fp string, dev bool) {
+func (self *controller) init(httpSwagger http.HandlerFunc, fp string, dev bool) {
+    self.httpSwagger = httpSwagger
 
     // create instance http.FileServer untuk melayani resources /www/* (non-handlers)
     self.fileHandler = http.FileServer(http.Dir(fp))
@@ -490,11 +492,14 @@ func (self *controller) sendError(w http.ResponseWriter, c int, e string) {
 func (self *controller) ServeHTTP(w http.ResponseWriter, r *http.Request) {
     if r.Method == doMap[dOPTIONS] {
         w.Header().Set("Access-Control-Allow-Origin", "*")
-        w.Header().Set("Access-Control-Allow-Methods", "POST,PUT,GET,OPTIONS,DELETE")
         w.Header().Set("Access-Control-Allow-Headers", "*")
+        w.Header().Set("Access-Control-Allow-Methods", "POST,PUT,GET,OPTIONS,DELETE")
         w.Header().Set("Access-Control-Allow-Credentials", "true")
         w.Header().Set("Access-Control-Expose-Headers", "Authorization")
         return
+    }
+    if origin := r.Header.Get("Origin"); origin != "" {
+        w.Header().Set("Access-Control-Allow-Origin", origin)
     }
     methodName := ""
     handler, v := servMap[r.URL.Path]
@@ -520,10 +525,14 @@ func (self *controller) ServeHTTP(w http.ResponseWriter, r *http.Request) {
             }
         }
         if resFile {
-            // asumsi (saat ini) semua resource di bawah www/* adalah public
-            //
-            // TODO: enhance mekanisme akses berdasarkan ACL, mungkin mapping package/group ke resources??
-            self.fileHandler.ServeHTTP(w, r)
+            if strings.HasPrefix(r.URL.Path, "swagger") {
+                self.httpSwagger(w, r)
+            } else {
+                // asumsi (saat ini) semua resource di bawah www/* adalah public
+                //
+                // TODO: enhance mekanisme akses berdasarkan ACL, mungkin mapping package/group ke resources??
+                self.fileHandler.ServeHTTP(w, r)
+            }
             return
         }
     }
